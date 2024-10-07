@@ -18,6 +18,7 @@
         }
     }
 
+    // Check delete character
     public static string CheckDelete(string input) 
     {
         string result = "";
@@ -36,15 +37,16 @@
         return result;
     }
 
+    // Main function
     public static string OldPhonePad(string input)
     {
         string result = "";
 
-        // Store the mobile keypad mappings
+        // Phone keypad mappings
         string[] nums = { "", "", "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ" };
 
         // Ignore characters
-        char[] ignore = { ' ', '.', '*', '#' };
+        char[] ignore = { ' ', '.', '#' };
 
         char[] str = CheckDelete(input).ToCharArray();
 
@@ -65,7 +67,6 @@
             // Iterate a loop to find the count of same characters
             while (i + 1 < str.Length && str[i] == str[i + 1])
             {
-
                 // 2, 3, 4, 5, 6 and 8 keys will have maximum of 3 letters
                 if (count == 2 && ((str[i] >= '2' && str[i] <= '6') || (str[i] == '8')))
                     break;
@@ -83,11 +84,16 @@
             }
 
             var strIndex = (str[i] - 48);
-            // Check if the current pressed key is 7 or 9
-            if (str[i] == '7' || str[i] == '9')
-                result += nums[strIndex][count % 4];
-            else // Else, the key pressed is either 2, 3, 4, 5, 6 or 8
-                result += nums[strIndex][count % 3];
+
+            if (strIndex > 0 && strIndex <= nums.Length - 1) //error handle
+            {
+                // Check if the current pressed key is 7 or 9
+                if (str[i] == '7' || str[i] == '9')
+                    result += nums[strIndex][count % 4];
+                else // Else, the key pressed is either 2, 3, 4, 5, 6 or 8
+                    result += nums[strIndex][count % 3];
+            }
+
             i++;
         }
 
